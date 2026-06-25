@@ -4,6 +4,12 @@
     <div class="custom-banner__media-container">
         {%  if section.settings.banner_image != blank %}
             {% assign image_alt = section.settings.banner_image.alt | default: section.settings.heading | escape %}
+            {{ section.settings.banner_image | image_url: width: 2000 | image_tag:
+                class: 'custom-banner__image',
+                widths: '385, 550 750, 1100, 1500, 2000',
+                sizes: '100vw',
+                alt: image_alt
+            }}
         {% else %}
         {% endif %}
     </div>
