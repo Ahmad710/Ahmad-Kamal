@@ -291,7 +291,6 @@
             })
             .then(response => response.json())
             .then(data => {
-                // Cart count ya drawer update karne ke liye event (Zaroori hai)
                 document.dispatchEvent(new CustomEvent('cart:updated'));
                 setTimeout(() => {
                     // Close modal
