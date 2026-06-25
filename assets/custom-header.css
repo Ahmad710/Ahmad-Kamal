@@ -5,8 +5,8 @@
   --header-text: #000000;
   --header-btn-bg: #ffff33;
   --header-btn-text: #000000;
-  --padding-top: 15px;
-  --padding-bottom: 15px;
+  --padding-top: 10px;
+  --padding-bottom: 10px;
 
   position: relative;
   background-color: var(--header-bg);
