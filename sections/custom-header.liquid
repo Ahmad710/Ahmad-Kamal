@@ -84,7 +84,8 @@
         const nextExpendState = !isExpand;
 
         toggleBtn.setAttribute('aria-expanded', nextExpendState);
-        console.log(isExpand);
+        console.log(nextExpendState);
+        {% comment %} header.classList.toggle('menu-open', nextExpendState); {% endcomment %}
     });
 
 </script>
