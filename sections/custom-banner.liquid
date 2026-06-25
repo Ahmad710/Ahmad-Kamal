@@ -31,24 +31,24 @@
         {% endif %}
     
         {% comment %} content box {% endcomment %}
-         <div class="custom-banner__content-box">
+        <div class="custom-banner__content-box">
             {% if section.settings.heading != blank %}
                 <h2 class="custom-banner__heading custom-banner__heading--desktop"> {{ section.settings.heading | escape }} </h2>
             {% endif %}
-         </div>
 
-         {% if section.settings.description != blank %}
-            <div class="custom-banner__description custom-banner__description--desktop">
-                <p> {{ section.settings.description | newline_to_br }} </p>
-            </div>
-         {% endif %}
+            {% if section.settings.description != blank %}
+                <div class="custom-banner__description custom-banner__description--desktop">
+                    <p> {{ section.settings.description | newline_to_br }} </p>
+                </div>
+            {% endif %}
 
-         {% if section.settings.button_label != blank %}
-            <a href="{{ section.settings.button_link | default: "#" }}" class="custom-banner__button">
-                <span>{{ section.settings.button_label | escape }}</span>
-                {{ 'custom-white-arrow.svg' | inline_asset_content }}
-            </a>
-         {% endif %}
+            {% if section.settings.button_label != blank %}
+                <a href="{{ section.settings.button_link | default: "#" }}" class="custom-banner__button">
+                    <span>{{ section.settings.button_label | escape }}</span>
+                    {{ 'custom-white-arrow.svg' | inline_asset_content }}
+                </a>
+            {% endif %}
+        </div>
     </div>
 
     {% comment %} bottom text {% endcomment %}
