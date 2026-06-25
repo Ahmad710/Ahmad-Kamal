@@ -19,9 +19,19 @@
         "button_link": "",
         "bottom_text": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL"
       }
+    },
+    "custom_featured_collection_t4pmXm": {
+      "type": "custom-featured-collection",
+      "name": "Custom collection",
+      "settings": {
+        "product_list": [],
+        "columns_desktop": 3,
+        "products_to_show": 6
+      }
     }
   },
   "order": [
-    "custom_banner_r8GUjN"
+    "custom_banner_r8GUjN",
+    "custom_featured_collection_t4pmXm"
   ]
 }
