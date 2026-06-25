@@ -282,8 +282,7 @@
                 selectedOptions.push(select.value);
             });
             
-            const isBlackAndMedium = selectedOptions.includes('Black') && selectedOptions.includes('Medium');
-            console.log("BM" + isBlackAndMedium);
+            console.log(selectedOptions);
             // Simple fetch request
             fetch('/cart/add.js', {
                 method: 'POST',
