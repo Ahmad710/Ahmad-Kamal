@@ -293,10 +293,10 @@
                 document.dispatchEvent(new CustomEvent('cart:updated'));
 
                 const itemsToAdd = [{ id: 1, quantity: 1 }];
-                
-                if(selectedOptions.includes('Black') && selectedOptions.includes('M')) {
+
+                if (selectedOptions.includes('Black') && selectedOptions.includes('M')) {
                     return fetch(`/products/soft-winter-jacket.js`)
-                    .then((res) => res.json()
+                    .then((res) => res.json())
                     .then((jacket) => {
                         itemToAdd.push({ id: jacket.variants[0].id, quantity: 1 });
                         return addItemsToCart(itemToAdd);
