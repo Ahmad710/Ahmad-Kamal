@@ -30,7 +30,7 @@
                             {% comment %} plus button {% endcomment %}
                              <button class="custom-featured-collection__hotspot custom-featured-collection__hotspot--{{ hotspot_pos }}"
                                 aria-label="Quick buy {{ product.title | escape }}"
-                                aria-expanded="false">
+                                aria-expanded="false" data-target="Modal-{{ product.id }}">
                                     {{ 'custom-plus-icon.svg' | inline_asset_content }}
                              </button>
                         </div>
@@ -144,11 +144,13 @@
 <script>
     const plusBtn = document.querySelectorAll('.custom-featured-collection__hotspot');
     {% comment %} const closeBtn = document.querySelector('.custom-featured-collection__modal-close'); {% endcomment %}
-    const popup = document.querySelectorAll('.custom-featured-collection__modal');
+    {% comment %} const popup = document.querySelectorAll('.custom-featured-collection__modal'); {% endcomment %}
 
     plusBtn.forEach(button => {
         button.addEventListener('click', function() {
             console.log("123");
+            const targetId = button.getAttribute('data-target');
+        const targetModal = document.getElementById(targetId);
             popup.classList.add('is-active');
         });
     });
