@@ -77,6 +77,11 @@
     var hamburgerIcon = toggleBtn.querySelector('.icon-hamburger');
     var closeIcon = toggleBtn.querySelector('.icon-close');
     var mobileMenu = header.querySelector('.custom-header__menu-mobile');
+
+    toggleBtn.addEventListener('click', function() {
+        const isExpand = toggleBtn.getAttribute('aria-expanded') === 'true';
+    });
+
 </script>
 
 {% schema %}
