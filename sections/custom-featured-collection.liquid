@@ -166,11 +166,17 @@
     
     {% comment %} closeBtn.forEach(close => { {% endcomment %}
         closeBtn.addEventListener('click', function() {
+                        const targetId = button.getAttribute('data-target');
+            console.log(targetId);
+            const targetModal = document.getElementById(targetId);
+            console.log(targetModal);
+
+            if (targetModal) {
                 targetModal.classList.remove('is-active');
                 targetModal.setAttribute('aria-hidden', 'true');
                 button.setAttribute('aria-expanded', 'false');
                 document.body.classList.remove('custom-featured-collection-modal-open');
-            
+            }
         });
     {% comment %} }); {% endcomment %}
     
