@@ -32,10 +32,10 @@
          {% endif %}
 
          {% if section.settings.button_label != blank %}
-            <a href="{{ section.settings.button_link | default: "#" }}" class="custom-header__btn">
-                    <span>{{ section.settings.button_label | escape }}</span>
-                    {{ 'custom-arrow.svg' | inline_asset_content }}
-                </a>
+            <a href="{{ section.settings.button_link | default: "#" }}" class="custom-banner__button">
+                <span>{{ section.settings.button_label | escape }}</span>
+                {{ 'custom-white-arrow.svg' | inline_asset_content }}
+            </a>
          {% endif %}
     </div>
 
