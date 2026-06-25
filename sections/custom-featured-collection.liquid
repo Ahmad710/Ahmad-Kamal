@@ -185,6 +185,8 @@
     colorSwatch.forEach(swatch => {
         swatch.addEventListener('click', function() {
             console.log("123")
+            const swatchGroup = swatch.closest('.custom-featured-collection__swatches');
+            const optionBlock = swatch.closest('.custom-featured-collection__modal-option');
         });
     });
     
