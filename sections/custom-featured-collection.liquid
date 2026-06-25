@@ -82,15 +82,6 @@
                                                                 </button>
                                                             {% endfor %}
                                                          </div>
-
-                                                         {% comment %} select dropdown {% endcomment %}
-                                                         <select name="options[{{ option.name }}]" class="custom-featured-collection__hidden-select" style="display: none;">
-                                                            {% for value in option.values %}
-                                                                <option value="{{ value | escape }}" {% if option.selected_value == value %}selected="selected"{% endif %}>
-                                                                    {{ value }}
-                                                                </option>
-                                                            {% endfor %}
-                                                         </select>
                                                     {% else %}
                                                         {% comment %} dropdown for other option {% endcomment %}
                                                          <div class="custom-featured-collection__select-wrapper">
@@ -197,10 +188,10 @@
             swatch.classList.add('is-selected');
 
             {% comment %} Update hidden select option {% endcomment %}
-            const hiddenSelect = optionBlock.querySelector('.custom-featured-collection__hidden-select');
+            {% comment %} const hiddenSelect = optionBlock.querySelector('.custom-featured-collection__hidden-select');
             if (hiddenSelect) {
                 hiddenSelect.value = swatch.getAttribute('data-value');
-            }
+            } {% endcomment %}
         });
     });
     
