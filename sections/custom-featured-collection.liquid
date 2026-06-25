@@ -182,9 +182,9 @@
         });
     });
 
-    {% comment %} colorSwatch.forEach(swatch => {
+    colorSwatch.forEach(swatch => {
         swatch.addEventListener('click', function() {
-            console.log("123")
+            console.log("123");
             const swatchGroup = swatch.closest('.custom-featured-collection__swatches');
             const optionBlock = swatch.closest('.custom-featured-collection__modal-option');
 
@@ -200,7 +200,7 @@
                 hiddenSelect.dispatchEvent(new Event('change', {bubbles: true}));
             }
         });
-    }); {% endcomment %}
+    });
     
 </script>
 
