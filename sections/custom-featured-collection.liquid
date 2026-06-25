@@ -190,43 +190,7 @@
         });
     });
 
-    {% comment %} read variant data {% endcomment %}
-    const variantsJsonEl = modal.querySelector('.product-variants-json');
-    if (!variantsJsonEl) return;
-    const variants = JSON.parse(variantsJsonEl.textContent);
-
-    {% comment %} create array for variants {% endcomment %}
-    const selectedOptions = [];
-    modal.querySelectorAll('.custom-featured-collection__modal-option select').forEach(select => {
-        selectedOptions.push(select.value);
-    });
-
-    {% comment %} match variants in db {% endcomment %}
-    const matchedVariant = variants.find(variant => {
-        return variant.options.every((opt, index) => opt === selectedOptions[index]);
-    });
-
-    {% comment %} manage cart btn {% endcomment %}
-    const idInput = modal.querySelector('input[name="id"]');
-    const submitBtn = modal.querySelector('.custom-featured-collection__modal-submit');
-    const submitBtnText = submitBtn.querySelector('span');
-
-    // 5. Agar variant mil jaye to add to cart enable karein
-    if (matchedVariant) {
-        idInput.value = matchedVariant.id; // Hidden ID update ho gayi
-
-        if (matchedVariant.available) {
-        submitBtn.disabled = false;
-        submitBtnText.textContent = 'ADD TO CART';
-        } else {
-        submitBtn.disabled = true;
-        submitBtnText.textContent = 'SOLD OUT';
-        }
-    } else {
-        // Agar variant mojood nahi hai
-        submitBtn.disabled = true;
-        submitBtnText.textContent = 'UNAVAILABLE';
-    }
+    
 </script>
 
 
