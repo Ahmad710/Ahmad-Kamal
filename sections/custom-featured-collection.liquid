@@ -137,6 +137,7 @@
     const closeBtns = document.querySelectorAll('.custom-featured-collection__modal-close');
     const colorSwatch = document.querySelectorAll('.custom-featured-collection__swatch');
     const modal = document.querySelectorAll('.custom-featured-collection__modal');
+    const form = document.querySelectorAll('.custom-featured-collection__modal-form');
     
     
     plusBtn.forEach(button => {
@@ -255,9 +256,6 @@
     }
 
 
-    const form = e.target.closest('.custom-featured-collection__modal-form');
-        if (!form) return;
-        
         e.preventDefault();
         const submitBtn = form.querySelector('.custom-featured-collection__modal-submit');
         const submitText = submitBtn.querySelector('span');
