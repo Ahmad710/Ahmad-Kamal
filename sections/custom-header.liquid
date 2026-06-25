@@ -9,6 +9,9 @@
 
 <header class="custom-header custom-header--sticky" id="custom-header-{{ section.id }}">
     <div class="custom-header__container">
+        {% comment %} Hamburger/close button {% endcomment %}
+        <button type="button" class="custom-header__menu-toggle" aria-expanded="false" aria-controls="MobileMenu" aria-label="Toggle Navigation"></button>
+
         {% comment %} logo {% endcomment %}
         <div class="custom-header__logo">
         <a href="{{ routes.root_url }}" class="custom-header__logo-link">
