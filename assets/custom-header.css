@@ -69,7 +69,7 @@
 .custom-header__btn {
   background-color: var(--header-btn-bg);
   color: var(--header-btn-text);
-  padding: 1.2rem 2.8rem;
+  padding: 7px 15px;
   font-size: 1.3rem;
   font-weight: 600;
   text-transform: uppercase;
