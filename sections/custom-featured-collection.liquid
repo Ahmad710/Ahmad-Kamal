@@ -143,7 +143,7 @@
 
 <script>
     const plusBtn = document.querySelectorAll('.custom-featured-collection__hotspot');
-    {% comment %} const closeBtn = document.querySelector('.custom-featured-collection__modal-close'); {% endcomment %}
+    const closeBtn = document.querySelector('.custom-featured-collection__modal-close');
     {% comment %} const popup = document.querySelectorAll('.custom-featured-collection__modal'); {% endcomment %}
 
     plusBtn.forEach(button => {
@@ -159,6 +159,17 @@
                 button.setAttribute('aria-expanded', 'true');
                 document.body.classList.add('custom-featured-collection-modal-open');
             }
+            
+        });
+    });
+
+    
+    closeBtn.forEach(button => {
+        button.addEventListener('click', function() {
+                targetModal.classList.remove('is-active');
+                targetModal.setAttribute('aria-hidden', 'true');
+                button.setAttribute('aria-expanded', 'false');
+                document.body.classList.remove('custom-featured-collection-modal-open');
             
         });
     });
