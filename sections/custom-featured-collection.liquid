@@ -232,20 +232,20 @@
         });
     });
 
-    // 3. MAIN FUNCTION: Jo variant match karega aur update karega
+    {% comment %} main function for variant match {% endcomment %}
     function updateVariant(modal) {
         const variantsData = modal.querySelector('.product-variants-json');
         if (!variantsData) return;
 
         const variants = JSON.parse(variantsData.textContent);
 
-        // Select kiye hue options ko array mein jama karein
+        {% comment %} Add selected variant into array {% endcomment %}
         const selectedOptions = [];
         modal.querySelectorAll('.custom-featured-collection__modal-option select').forEach(select => {
             selectedOptions.push(select.value);
         });
 
-        // Variant match karein
+        {% comment %} variant match {% endcomment %}
         const matchedVariant = variants.find(variant => {
             return variant.options.every((opt, index) => opt === selectedOptions[index]);
         });
@@ -255,7 +255,7 @@
         const submitBtnText = submitBtn.querySelector('span');
 
         if (matchedVariant) {
-            idInput.value = matchedVariant.id; // Hidden ID update ho gayi
+            idInput.value = matchedVariant.id;
 
             if (matchedVariant.available) {
                 submitBtn.disabled = false;
@@ -274,7 +274,7 @@
     const forms = document.querySelectorAll('.custom-featured-collection__modal-form');
     forms.forEach(form => {
         form.addEventListener('submit', function(e) {
-            e.preventDefault(); // Default reload roka
+            e.preventDefault();
 
             // Simple fetch request
             fetch('/cart/add.js', {
