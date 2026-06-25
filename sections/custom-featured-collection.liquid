@@ -154,7 +154,10 @@
             console.log(targetModal);
 
             if (targetModal) {
-                
+                targetModal.classList.add('is-active');
+                targetModal.setAttribute('aria-hidden', 'false');
+                button.setAttribute('aria-expanded', 'true');
+                document.body.classList.add('custom-featured-collection-modal-open');
             }
             
         });
