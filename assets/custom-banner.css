@@ -1,0 +1,215 @@
+/* Custom Banner Section Stylesheet */
+
+.custom-banner {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.custom-banner__header-mobile {
+    display: none;
+}
+
+.custom-banner__media-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    /* Prevents tiny sub-pixel spaces below images */
+}
+
+/* Banner Image styles */
+.custom-banner__image {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+/* Overlay Content Box positioning */
+.custom-banner__content-box {
+    position: absolute;
+    bottom: 0%;
+    left: 0%;
+    width: 100%;
+    max-width: 650px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    line-height: normal;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    padding: 45px 90px;
+}
+
+/* Typography styles */
+.custom-banner__heading {
+    font-family: var(--font-heading-family), sans-serif;
+    font-size: 8rem;
+    font-weight: 500;
+    color: #000000;
+    margin: 0 0 1.5rem 0;
+    line-height: 1;
+    letter-spacing: -0.01em;
+}
+
+.custom-banner__description {
+    font-family: var(--font-body-family), sans-serif;
+    font-size: 2rem;
+    font-weight: 400;
+    color: #1a1a1a;
+    line-height: 1.6;
+    margin: 0 0 2.5rem 0;
+    max-width: 470px;
+}
+
+.custom-banner__description p {
+    margin: 0;
+}
+
+/* Styled Button */
+.custom-banner__button {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 1.4rem 3.2rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    text-decoration: none;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.custom-banner__button .icon-arrow {
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    stroke-width: 2.5;
+}
+
+/* Hover effects */
+.custom-banner__button:hover {
+    background-color: #222222;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.custom-banner__button:hover .icon-arrow {
+    transform: translateX(6px);
+}
+
+.custom-banner__button:active {
+    transform: translateY(-1px);
+}
+
+/* Bottom Ticker Announcement Bar */
+.custom-banner__ticker {
+    background-color: #f5f5f5;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 1.2rem 2rem;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.custom-banner__ticker-text {
+    margin: 0;
+    font-family: var(--font-body-family), sans-serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #000000;
+    line-height: 1.4;
+    display: block;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 989px) {
+    .custom-banner__heading {
+        font-size: 3.8rem;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .custom-banner__header-mobile {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 4rem 2rem 3rem 2rem;
+        background-color: #ffffff;
+    }
+
+    .custom-banner__header-mobile .custom-banner__heading {
+        font-family: var(--font-heading-family), sans-serif;
+        font-size: 3.6rem;
+        font-weight: 600;
+        line-height: 1.2;
+        color: #000000;
+        margin: 0 auto 1.5rem auto;
+        text-align: center;
+        max-width: 90%;
+        letter-spacing: -0.01em;
+    }
+
+    .custom-banner__header-mobile .custom-banner__description {
+        font-family: var(--font-body-family), sans-serif;
+        font-size: 1.3rem;
+        line-height: 1.4;
+        color: #1a1a1a;
+        margin: 0 auto;
+        text-align: center;
+        max-width: 320px;
+    }
+
+    /* Hide desktop elements on mobile */
+    .custom-banner__heading--desktop,
+    .custom-banner__description--desktop {
+        display: none !important;
+    }
+
+    /* Position content box as transparent overlay centering the button at the bottom of the image */
+    .custom-banner__content-box {
+        position: absolute;
+        bottom: 12%;
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+        width: 100%;
+        max-width: 100%;
+        background-color: transparent;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10;
+    }
+
+    .custom-banner__button {
+        padding: 1.4rem 3.2rem;
+        font-size: 1.3rem;
+        max-width: 100%;
+        justify-content: center;
+    }
+
+    .custom-banner__ticker {
+        padding: 1.2rem 1.5rem;
+    }
+
+    .custom-banner__ticker-text {
+        font-size: 1rem;
+        letter-spacing: 0.1em;
+    }
+}
