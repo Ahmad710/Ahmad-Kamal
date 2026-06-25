@@ -76,7 +76,7 @@
                                                          <div class="custom-featured-collection__swatches">
                                                             {% for value in option.values %}
                                                                 <button type="button" class="custom-featured-collection__swatch {% if option.selected_value == value %} is-selected {% endif %}"
-                                                                data-vlaue="{{ value | escape }}">
+                                                                data-value="{{ value | escape }}">
                                                                     <span class="custom-featured-collection__swatch-color" style="background-color: {{ value | downcase }}"></span>
                                                                     <span class="custom-featured-collection__swatch-text">{{ value }}</span>
                                                                 </button>
@@ -295,7 +295,7 @@
             submitText.textContent = originalText;
           }, 1500);
         });
-    });
+});
 </script>
 
 
