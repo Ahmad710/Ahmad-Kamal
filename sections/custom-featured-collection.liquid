@@ -166,10 +166,10 @@
                 const modal = document.getElementById('Modal-' + prodId);
                 
                 if (modal) {
-                    targetModal.classList.remove('is-active');
-                targetModal.setAttribute('aria-hidden', 'true');
-                button.setAttribute('aria-expanded', 'false');
-                document.body.classList.remove('custom-featured-collection-modal-open');
+                    modal.classList.remove('is-active');
+                    modal.setAttribute('aria-hidden', 'true');
+                    button.setAttribute('aria-expanded', 'false');
+                    document.body.classList.remove('custom-featured-collection-modal-open');
                 }
                 
             }
