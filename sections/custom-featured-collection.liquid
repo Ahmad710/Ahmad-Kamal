@@ -48,7 +48,13 @@
                                     <div class="custom-featured-collection__modal-img-wrapper">
                                         {% if product.featured_media != blank %}
                                             <img src="{{ product.featured_media | image_url: width: 300 }}" alt="{{ product.title | escape }}" class="custom-featured-collection__modal-img" loading="lazy">
+                                        {% else %}
+                                            {{ 'product-1' | placeholder_svg_tag: 'custom-featured-collection__modal-placeholder' }}
                                         {% endif %}
+                                    </div>
+                                    <div class="custom-featured-collection__modal-info">
+                                        <h3 class="custom-featured-collection__modal-title">{{ product.title }}</h3>
+                                        <p class="custom-featured-collection__modal-price">{{ product.price | money }}</p>
                                     </div>
                                 </div>
                             </div>
