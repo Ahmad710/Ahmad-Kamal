@@ -283,6 +283,12 @@
             });
             
             console.log(selectedOptions);
+
+            const isBlack = selectedOptions.some(opt => opt && opt.toLowerCase().trim() === 'black');
+            const isMedium = selectedOptions.some(opt => opt && (opt.toLowerCase().trim() === 'medium' || opt.toLowerCase().trim() === 'm'));
+            const isBlackAndMedium = isBlack && isMedium;
+            console.log("Is Black & Medium?:", isBlackAndMedium);
+
             // Simple fetch request
             fetch('/cart/add.js', {
                 method: 'POST',
@@ -290,6 +296,39 @@
             })
             .then(response => response.json())
             .then(data => {
+                // 3. Agar match ho, to jacket check karein
+                if (isBlackAndMedium) {
+                    console.log("Adding Soft Winter Jacket...");
+                    
+                    return fetch('/products/soft-winter-jacket.js')
+                    .then(res => {
+                        // Agar handle galat hai ya 404 error hai
+                        if (!res.ok) {
+                            throw new Error("Jacket product handle 'soft-winter-jacket' nahi mila. Shopify admin mein handle check karein.");
+                        }
+                        return res.json();
+                    })
+                    .then(product => {
+                        const defaultVariantId = product.variants[0].id;
+                        
+                        // FormData use karein taake request fail na ho
+                        const jacketFormData = new FormData();
+                        jacketFormData.append('id', defaultVariantId);
+                        jacketFormData.append('quantity', 1);
+                        return fetch('/cart/add.js', {
+                            method: 'POST',
+                            body: jacketFormData
+                        })
+                        .then(jacketRes => {
+                            if (!jacketRes.ok) {
+                                throw new Error('Jacket variants could not be added.');
+                            }
+                            return jacketRes.json();
+                        });
+                    });
+                }
+            })
+            .then(() => {
                 document.dispatchEvent(new CustomEvent('cart:updated'));
 
                 setTimeout(() => {
