@@ -55,6 +55,11 @@
                                     <div class="custom-featured-collection__modal-info">
                                         <h3 class="custom-featured-collection__modal-title">{{ product.title }}</h3>
                                         <p class="custom-featured-collection__modal-price">{{ product.price | money }}</p>
+                                        {% if product.description != blank %}
+                                            <p class="custom-featured-collection__modal-desc">
+                                                {{ product.description | strip_html |truncatewords: 20 }}
+                                            </p>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
