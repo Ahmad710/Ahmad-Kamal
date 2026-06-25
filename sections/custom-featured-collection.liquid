@@ -143,7 +143,7 @@
 
 <script>
     const plusBtn = document.querySelectorAll('.custom-featured-collection__hotspot');
-    const closeBtn = document.querySelector('.custom-featured-collection__modal-close');
+    const closeBtns = document.querySelectorAll('.custom-featured-collection__modal-close');
     {% comment %} const popup = document.querySelectorAll('.custom-featured-collection__modal'); {% endcomment %}
 
     plusBtn.forEach(button => {
@@ -163,7 +163,23 @@
         });
     });
 
-
+    closeBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Find the specific modal this close button/backdrop belongs to
+            const targetModal = btn.closest('.custom-featured-collection__modal');
+            if (targetModal) {
+                targetModal.classList.remove('is-active');
+                targetModal.setAttribute('aria-hidden', 'true');
+                document.body.classList.remove('custom-featured-collection-modal-open');
+                
+                // Find the button that opened this modal and reset its accessibility state
+                const triggerBtn = document.querySelector(`[data-target="${targetModal.id}"]`);
+                if (triggerBtn) {
+                    triggerBtn.setAttribute('aria-expanded', 'false');
+                }
+            }
+        });
+    });
     
 </script>
 
