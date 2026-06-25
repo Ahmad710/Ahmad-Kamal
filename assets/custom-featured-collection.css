@@ -347,6 +347,12 @@ body.custom-featured-collection-modal-open {
     width: 100%;
 }
 
+.custom-featured-collection__select-wrapper svg {
+        position: absolute;
+    right: 5%;
+    top: 45%;
+}
+
 .custom-featured-collection__modal-select {
     width: 100%;
     padding: 12px 40px 12px 16px;
