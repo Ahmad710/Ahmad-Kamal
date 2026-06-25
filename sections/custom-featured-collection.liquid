@@ -40,6 +40,11 @@
                         {% comment %} Popup {% endcomment %}
                          <div class="custom-featured-collection__modal" id="Modal-{{ product.id }}" aria-hidden="true">
                             <div class="custom-featured-collection__modal-backdrop" data-close-mdal={{ product.id }}></div>
+
+                            <div class="custom-featured-collection__modal-content">
+                                <button type="button" class="custom-featured-collection__modal-close" data-close-modal="{{ product.id }}" aria-label="Close Modal"></button>
+                                
+                            </div>
                          </div>
                     </div>
                 {% endfor %}
