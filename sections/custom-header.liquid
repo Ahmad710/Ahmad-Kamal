@@ -53,18 +53,20 @@
     {% comment %} Mobile Menu {% endcomment %}
      <div class="custom-header__menu-mobile" id="MobileMenu">
         <div class="custom-header__menu-mobile-inner">
+            {% comment %} responsive text {% endcomment %}
             <div class="custom-header__text-mobile">
                 <p>{{ section.settings.center_text }}</p>
             </div>
 
-            <div class="custom-header__button-desktop">
-            {% if section.settings.button_label != blank %}
-                <a href="{{ section.settings.button_link | default: "#" }}" class="custom-header__btn">
-                    <span>{{ section.settings.button_label | escape }}</span>
-                    {{ 'custom-arrow.svg' | inline_asset_content }}
-                </a>
-            {% endif %}
-        </div>
+            {% comment %} responsive button {% endcomment %}
+            <div class="custom-header__button-mobile">
+                {% if section.settings.button_label != blank %}
+                    <a href="{{ section.settings.button_link | default: "#" }}" class="custom-header__btn">
+                        <span>{{ section.settings.button_label | escape }}</span>
+                        {{ 'custom-arrow.svg' | inline_asset_content }}
+                    </a>
+                {% endif %}
+            </div>
         </div>
      </div>
 </header>
