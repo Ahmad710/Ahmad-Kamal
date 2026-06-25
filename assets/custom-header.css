@@ -191,7 +191,7 @@
   }
 
   .custom-header__logo-img {
-    max-width: var(--logo-width-mobile);
+    max-width: var(--mobile-width);
   }
 
   .custom-header__logo-text {
