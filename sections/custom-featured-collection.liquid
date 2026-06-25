@@ -175,37 +175,41 @@
         });
     });
 
-  document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
     
-    // 1. Color Swatches (Buttons) click listener
+    // ==========================================
+    // 1. COLOR SWATCHES CLICK HANDLING
+    // ==========================================
     const colorSwatches = document.querySelectorAll('.custom-featured-collection__swatch');
     
     colorSwatches.forEach(swatch => {
         swatch.addEventListener('click', function() {
             const swatchGroup = swatch.closest('.custom-featured-collection__swatches');
             const optionBlock = swatch.closest('.custom-featured-collection__modal-option');
-            const modal = swatch.closest('.custom-featured-collection__modal'); // modal ko yahan select kiya
+            const modal = swatch.closest('.custom-featured-collection__modal');
 
             if (!swatchGroup || !optionBlock || !modal) return;
 
-            // Swatches ki class toggle karein
+            // Swatch class update karein
             swatchGroup.querySelectorAll('.custom-featured-collection__swatch').forEach(btn => {
                 btn.classList.remove('is-selected');
             });
             swatch.classList.add('is-selected');
 
-            // Hidden select ki value ko swatch button ke data-value se update karein
+            // Hidden select dropdown update karein
             const hiddenSelect = optionBlock.querySelector('.custom-featured-collection__hidden-select');
             if (hiddenSelect) {
                 hiddenSelect.value = swatch.getAttribute('data-value');
             }
 
-            // Variant ko update karne wala function call karein
+            // Variant check karein
             updateVariant(modal);
         });
     });
 
-    // 2. Normal dropdown selects change listener
+    // ==========================================
+    // 2. DROPDOWN SELECTION CHANGE HANDLING
+    // ==========================================
     const selects = document.querySelectorAll('.custom-featured-collection__modal-select');
     selects.forEach(select => {
         select.addEventListener('change', function() {
@@ -216,14 +220,16 @@
         });
     });
 
-    // 3. MAIN FUNCTION: Jo variant match karega aur update karega
+    // ==========================================
+    // 3. VARIANT MATCHING FUNCTION
+    // ==========================================
     function updateVariant(modal) {
         const variantsJsonEl = modal.querySelector('.product-variants-json');
-        if (!variantsJsonEl) return; // Ab yeh return sahi chalega kyunki yeh function ke andar hai!
+        if (!variantsJsonEl) return;
 
         const variants = JSON.parse(variantsJsonEl.textContent);
 
-        // Select kiye hue options ko array mein jama karein
+        // Selected options arrays mein dalein
         const selectedOptions = [];
         modal.querySelectorAll('.custom-featured-collection__modal-option select').forEach(select => {
             selectedOptions.push(select.value);
@@ -239,7 +245,7 @@
         const submitBtnText = submitBtn.querySelector('span');
 
         if (matchedVariant) {
-            idInput.value = matchedVariant.id; // Hidden ID update ho gayi
+            idInput.value = matchedVariant.id; // Correct ID update ho gayi!
 
             if (matchedVariant.available) {
                 submitBtn.disabled = false;
@@ -249,52 +255,64 @@
                 submitBtnText.textContent = 'SOLD OUT';
             }
         } else {
-            // Agar variant combination market mein available nahi hai
             submitBtn.disabled = true;
             submitBtnText.textContent = 'UNAVAILABLE';
         }
     }
 
+    // ==========================================
+    // 4. AJAX SUBMIT HANDLING (FIXED & MERGED)
+    // ==========================================
+    const forms = document.querySelectorAll('.custom-featured-collection__modal-form');
+    
+    forms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // Default reload ko rok diya
 
-        e.preventDefault();
-        const submitBtn = form.querySelector('.custom-featured-collection__modal-submit');
-        const submitText = submitBtn.querySelector('span');
-        const originalText = submitText.textContent;
-        
-        submitBtn.disabled = true;
-        submitText.textContent = 'ADDING...';
-
-        const formData = new FormData(form);
-        
-        fetch('/cart/add.js', {
-          method: 'POST',
-          body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-          submitText.textContent = 'ADDED!';
-          document.dispatchEvent(new CustomEvent('cart:updated'));
-          setTimeout(() => {
-            submitBtn.disabled = false;
-            submitText.textContent = originalText;
+            const submitBtn = form.querySelector('.custom-featured-collection__modal-submit');
+            const submitText = submitBtn.querySelector('span');
+            const originalText = submitText.textContent;
             
-            // Close modal
-            const modal = form.closest('.custom-featured-collection__modal');
-            if (modal) {
-              modal.classList.remove('is-active');
-              modal.setAttribute('aria-hidden', 'true');
-              document.body.classList.remove('custom-featured-collection-modal-open');
-            }
-          }, 1500);
-        })
-        .catch(error => {
-          console.error('Error adding variant:', error);
-          submitText.textContent = 'ERROR';
-          setTimeout(() => {
-            submitBtn.disabled = false;
-            submitText.textContent = originalText;
-          }, 1500);
+            submitBtn.disabled = true;
+            submitText.textContent = 'ADDING...';
+
+            // FormData automatic updated hidden input "id" ko collect karega
+            const formData = new FormData(form);
+            
+            fetch('/cart/add.js', {
+              method: 'POST',
+              body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+              submitText.textContent = 'ADDED!';
+              
+              // Cart update event dispatch karein
+              document.dispatchEvent(new CustomEvent('cart:updated'));
+              
+              setTimeout(() => {
+                submitBtn.disabled = false;
+                submitText.textContent = originalText;
+                
+                // Modal band karein
+                const modal = form.closest('.custom-featured-collection__modal');
+                if (modal) {
+                  modal.classList.remove('is-active');
+                  modal.setAttribute('aria-hidden', 'true');
+                  document.body.classList.remove('custom-featured-collection-modal-open');
+                }
+              }, 1500);
+            })
+            .catch(error => {
+              console.error('Error adding variant:', error);
+              submitText.textContent = 'ERROR';
+              setTimeout(() => {
+                submitBtn.disabled = false;
+                submitText.textContent = originalText;
+              }, 1500);
+            });
         });
+    });
 });
 </script>
 
