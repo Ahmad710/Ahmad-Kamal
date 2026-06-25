@@ -161,15 +161,7 @@
                 document.body.classList.add('custom-featured-collection-modal-open');
             }
 
-            if (closeModal) {
-                {% comment %} const prodId = closeModal.getAttribute('data-close-modal');
-                const modal = document.getElementById('Modal-' + prodId); {% endcomment %}
-                
-                targetModal.classList.remove('is-active');
-                targetModal.setAttribute('aria-hidden', 'true');
-                button.setAttribute('aria-expanded', 'false');
-                document.body.classList.remove('custom-featured-collection-modal-open');
-            }
+            
         });
     });
 
