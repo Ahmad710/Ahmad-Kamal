@@ -70,7 +70,7 @@
   background-color: var(--header-btn-bg);
   color: var(--header-btn-text);
   padding: 7px 15px;
-  font-size: 1.3rem;
+  font-size: 16px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -257,7 +257,6 @@
   .custom-header__button-mobile .custom-header__btn {
     width: 100%;
     max-width: 280px;
-    padding: 1.4rem 2.8rem;
   }
 }
 
