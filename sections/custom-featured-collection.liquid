@@ -35,6 +35,10 @@
                                     {{ 'custom-plus-icon.svg' | inline_asset_content }}
                              </button>
                         </div>
+
+
+                        {% comment %} Popup {% endcomment %}
+                         <div class="custom-featured-collection__modal" id="Modal-{{ product.id }}" aria-hidden="true"></div>
                     </div>
                 {% endfor %}
             {% else %}
