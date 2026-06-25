@@ -128,7 +128,12 @@
                 {% endfor %}
             {% else %}
                 {% comment %} placeolder images {% endcomment %}
-                 {%- capture hotspot_pos -%} {% cycle 'pos-1', 'pos-2', 'pos-3', 'pos-4', 'pos-5', 'pos-6', %} {%- endcapture -%}
+                 {% for i in (1..limit) %}
+                    {%- capture hotspot_pos -%} {% cycle 'pos-1', 'pos-2', 'pos-3', 'pos-4', 'pos-5', 'pos-6', %} {%- endcapture -%}
+                    <div class="custom-featured-collection__card custom-featured-collection__card--placeholder">
+
+                    </div>
+                {% endfor %}
             {% endif %}
         </div>
     </div>
