@@ -30,6 +30,13 @@
                 <p> {{ section.settings.description | newline_to_br }} </p>
             </div>
          {% endif %}
+
+         {% if section.settings.button_label != blank %}
+            <a href="{{ section.settings.button_link | default: "#" }}" class="custom-header__btn">
+                    <span>{{ section.settings.button_label | escape }}</span>
+                    {{ 'custom-arrow.svg' | inline_asset_content }}
+                </a>
+         {% endif %}
     </div>
 
 
