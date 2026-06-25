@@ -110,7 +110,7 @@
                                         </div>
                                     {% endunless %}
 
-                                    <button type="submit" class="custom-featured-collection__modal-submit" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+                                    <button class="custom-featured-collection__modal-submit" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
                                         <span>
                                             {% if product.selected_or_first_available_variant.available %}
                                                 Add to Cart
