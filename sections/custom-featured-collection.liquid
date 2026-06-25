@@ -143,13 +143,13 @@
 
 <script>
     const plusBtn = document.querySelectorAll('.custom-featured-collection__hotspot');
-    const closeBtn = document.querySelector('.custom-featured-collection__modal-close');
+    {% comment %} const closeBtn = document.querySelector('.custom-featured-collection__modal-close'); {% endcomment %}
     const popup = document.getElementById('Modal-{{ product.id }}');
 
     plusBtn.forEach(button => {
         button.addEventListener('click', function() {
             console.log("123");
-            popup.classList.add('is-active');
+            {% comment %} popup.classList.add('is-active'); {% endcomment %}
         });
     });
     
