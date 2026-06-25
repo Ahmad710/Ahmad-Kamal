@@ -73,6 +73,13 @@
                                                     <label class="custom-featured-collection__modal-label">{{ option.name }}</label>
 
                                                     {% if forloop.first %}
+                                                        {% comment %} swatches {% endcomment %}
+                                                         <div class="custom-featured-collection__swatches">
+                                                            {% for value in option.values %}
+                                                                <button type="button" class="custom-featured-collection__swatch {% if option.selected_value == value %} is-selected {% endif %}"
+                                                                data-vlaue="{{ value | escape }}"></button>
+                                                            {% endfor %}
+                                                         </div>
                                                     {% else %}
                                                     {% endif %}
                                                 </div>
