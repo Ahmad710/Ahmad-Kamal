@@ -164,15 +164,15 @@
     });
 
     
-    closeBtn.forEach(close => {
-        close.addEventListener('click', function() {
+    {% comment %} closeBtn.forEach(close => { {% endcomment %}
+        closeBtn.addEventListener('click', function() {
                 targetModal.classList.remove('is-active');
                 targetModal.setAttribute('aria-hidden', 'true');
                 button.setAttribute('aria-expanded', 'false');
                 document.body.classList.remove('custom-featured-collection-modal-open');
             
         });
-    });
+    {% comment %} }); {% endcomment %}
     
 </script>
 
