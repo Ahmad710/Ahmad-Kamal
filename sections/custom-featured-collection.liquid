@@ -164,8 +164,8 @@
     });
 
     
-    {% comment %} closeBtn.forEach(close => { {% endcomment %}
-        closeBtn.addEventListener('click', function() {
+    closeBtn.forEach(close => {
+        close.addEventListener('click', function() {
                         const targetId = button.getAttribute('data-target');
             console.log(targetId);
             const targetModal = document.getElementById(targetId);
@@ -178,7 +178,7 @@
                 document.body.classList.remove('custom-featured-collection-modal-open');
             }
         });
-    {% comment %} }); {% endcomment %}
+    });
     
 </script>
 
