@@ -62,7 +62,7 @@
                                     </div>
                                 </div>
 
-                                {% form 'product', product, class: 'custom-featured-collection__modal-form' %}
+                                {% form  product, class: 'custom-featured-collection__modal-form' %}
                                     <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
 
                                     {% unless product.has_only_default_variant %}
