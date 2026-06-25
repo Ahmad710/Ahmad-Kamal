@@ -291,18 +291,36 @@
             })
             .then(response => response.json())
             .then(data => {
-                // Cart count ya drawer update karne ke liye event (Zaroori hai)
-                document.dispatchEvent(new CustomEvent('cart:updated'));
-                setTimeout(() => {
-                    // Close modal
-                    const modal = form.closest('.custom-featured-collection__modal');
-                    if (modal) {
+                if (isBlackAndMedium) {
+                // Jacket ki handle se product JSON fetch karein
+                return fetch('/products/soft-winter-jacket.js')
+                    .then(res => res.json())
+                    .then(product => {
+                        const defaultVariantId = product.variants[0].id; // Default variant ID mil gayi!
+                        
+                        return fetch('/cart/add.js', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                id: defaultVariantId,
+                                quantity: 1
+                            })
+                        });
+                    });
+            })
+             .then(() => {
+            // 4. Cart update aur modal close
+            document.dispatchEvent(new CustomEvent('cart:updated'));
+            
+            setTimeout(() => {
+                const modal = form.closest('.custom-featured-collection__modal');
+                if (modal) {
                     modal.classList.remove('is-active');
                     modal.setAttribute('aria-hidden', 'true');
                     document.body.classList.remove('custom-featured-collection-modal-open');
-                    }
-                }, 1500);
-            })
+                }
+            }, 1500);
+        })
             .catch(error => {
             console.error('Error adding to cart:', error);
             });
