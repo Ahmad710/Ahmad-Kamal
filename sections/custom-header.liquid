@@ -81,6 +81,8 @@
     toggleBtn.addEventListener('click', function() {
         const isExpand = toggleBtn.getAttribute('aria-expanded') === 'true';
         console.log(isExpand);
+
+        toggleBtn.setAttribute('aria-expanded', 'true');
     });
 
 </script>
