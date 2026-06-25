@@ -11,6 +11,9 @@
                 alt: image_alt
             }}
         {% else %}
+            <div class="custom-banner__placeholder-wrapper">
+                {{ 'hero-apparel-1' | placeholder_svg_tag: 'custom-banner__placeholder' }}
+            </div>
         {% endif %}
     </div>
 </div>
