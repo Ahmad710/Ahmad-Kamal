@@ -148,10 +148,11 @@
 
     plusBtn.forEach(button => {
         button.addEventListener('click', function() {
-            console.log("123");
             const targetId = button.getAttribute('data-target');
-        const targetModal = document.getElementById(targetId);
-            popup.classList.add('is-active');
+            console.log(targetId);
+            const targetModal = document.getElementById(targetId);
+            console.log(targetModal);
+            
         });
     });
     
