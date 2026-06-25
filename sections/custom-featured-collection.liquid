@@ -276,6 +276,14 @@
         form.addEventListener('submit', function(e) {
             e.preventDefault();
 
+            // 1. Check karein ke options mein "Black" aur "Medium" selected hain ya nahi
+            const selectedOptions = [];
+            form.querySelectorAll('.custom-featured-collection__hidden-select, .custom-featured-collection__modal-select').forEach(select => {
+                selectedOptions.push(select.value);
+            });
+            
+            const isBlackAndMedium = selectedOptions.includes('Black') && selectedOptions.includes('Medium');
+
             // Simple fetch request
             fetch('/cart/add.js', {
                 method: 'POST',
