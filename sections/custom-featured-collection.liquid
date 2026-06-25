@@ -162,25 +162,18 @@
             }
 
             if (closeModal) {
-                {% comment %} const prodId = closeModal.getAttribute('data-close-modal'); {% endcomment %}
-                {% comment %} const modal = document.getElementById('Modal-' + prodId); {% endcomment %}
                 
-                {% comment %} if (targetModal) { {% endcomment %}
+                if (targetModal) {
                     targetModal.classList.remove('is-active');
                     targetModal.setAttribute('aria-hidden', 'true');
                     button.setAttribute('aria-expanded', 'false');
                     document.body.classList.remove('custom-featured-collection-modal-open');
-                {% comment %} } {% endcomment %}
+                }
             }
         });
     });
 
-    
-    closeBtn.forEach(close => {
-        close.addEventListener('click', function() {
-            console.log("1234")
-        });
-    });
+
     
 </script>
 
