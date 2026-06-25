@@ -275,41 +275,65 @@
 
 forms.forEach(form => {
     form.addEventListener('submit', async function(e) {
-        e.preventDefault(); // Default reload ko roka
+        e.preventDefault();
 
         try {
-            // 1. Check karein ke options mein "Black" aur "Medium" selected hain
+            // 1. Selected options collect karein (aur lowercase mein convert karein)
             const selectedOptions = [];
             form.querySelectorAll('.custom-featured-collection__hidden-select, .custom-featured-collection__modal-select').forEach(select => {
-                selectedOptions.push(select.value);
+                if (select.value) {
+                    selectedOptions.push(select.value.toLowerCase().trim());
+                }
             });
-            const isBlackAndMedium = selectedOptions.includes('Black') && selectedOptions.includes('Medium');
 
-            // 2. Pehla product add karein
+            // Live debug karne ke liye console log
+            console.log("Selected values:", selectedOptions);
+
+            // Check match: "black" aur "medium" ya "m"
+            const isBlack = selectedOptions.includes('black');
+            const isMedium = selectedOptions.includes('medium') || selectedOptions.includes('m');
+            const isBlackAndMedium = isBlack && isMedium;
+
+            console.log("Is Black & Medium?:", isBlackAndMedium);
+
+            // 2. Main product add karein
             const response = await fetch('/cart/add.js', {
                 method: 'POST',
                 body: new FormData(form)
             });
             await response.json();
 
-            // 3. Agar Black aur Medium selected hain, to Jacket add karein
+            // 3. Agar match ho, to jacket add karein
             if (isBlackAndMedium) {
-                const productRes = await fetch('/products/soft-winter-jacket.js');
-                const productData = await productRes.json();
-                const defaultVariantId = productData.variants[0].id; // Dynamic Variant ID
+                console.log("Black and Medium matched! Attempting to add jacket...");
+                
+                try {
+                    // Jacket product details fetch karein
+                    const productRes = await fetch('/products/soft-winter-jacket.js');
+                    
+                    if (productRes.ok) {
+                        const productData = await productRes.json();
+                        const defaultVariantId = productData.variants[0].id;
 
-                // Jacket ko add karein
-                await fetch('/cart/add.js', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        id: defaultVariantId,
-                        quantity: 1
-                    })
-                });
+                        // Jacket cart mein add karein
+                        await fetch('/cart/add.js', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                id: defaultVariantId,
+                                quantity: 1
+                            })
+                        });
+                        console.log("Jacket successfully added to cart!");
+                    } else {
+                        console.warn("Product handle 'soft-winter-jacket' nahi mila. Please check jacket URL handle in Shopify.");
+                    }
+                } catch (jacketErr) {
+                    console.error("Jacket add karne mein error:", jacketErr);
+                }
             }
 
-            // 4. Cart drawer/count update karein
+            // 4. Cart drawer update karein
             document.dispatchEvent(new CustomEvent('cart:updated'));
 
             // 5. Modal band karein
