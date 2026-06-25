@@ -11,7 +11,7 @@
         <div class="custom-featured-collection__grid">
             {% assign limit = section.settings.products_to_show %}
             {% if section.settings.product_list != blank %}
-                {% for product in section.settings.product_list %}
+                {% for product in section.settings.product_list limit: limit %}
                     {%- capture hotspot_pos -%} {% cycle 'pos-1', 'pos-2', 'pos-3', 'pos-4', 'pos-5', 'pos-6', %} {%- endcapture -%}
 
                     <div class="custom-featured-collection__card" data-prodyc-id="{{ product.id }}" data-product-handle="{{ product.handle }}">
@@ -29,7 +29,7 @@
 
                             {% comment %} plus button {% endcomment %}
                              <button class="custom-featured-collection__hotspot custom-featured-collection__hotspot-{{ hotspot_pos }}">
-                                
+
                              </button>
                         </div>
                     </div>
