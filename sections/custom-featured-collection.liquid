@@ -67,7 +67,13 @@
                                     <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
 
                                     {% unless product.has_only_default_variant %}
-                                    
+                                        <div class="custom-featured-collection__modal-options">
+                                            {% for option in product.options_with_values %}
+                                                <div class="custom-featured-collection__modal-option" data-option-index="{{ forloop.index0 }}">
+                                                    <label class="custom-featured-collection__modal-label">{{ option.name }}</label>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
                                     {% endunless %}
                                 {% endform %}
                             </div>
