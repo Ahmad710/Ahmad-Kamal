@@ -3,7 +3,7 @@
 <div class="custom-banner" id="custom-banner-{{ section.id }}">
     <div class="custom-banner__media-container">
         {%  if section.settings.banner_image != blank %}
-            
+            {% assign image_alt = section.settings.banner_image.alt | default: section.settings.heading | escape %}
         {% else %}
         {% endif %}
     </div>
