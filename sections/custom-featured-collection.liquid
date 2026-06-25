@@ -186,12 +186,6 @@
                 btn.classList.remove('is-selected');
             });
             swatch.classList.add('is-selected');
-
-            {% comment %} Update hidden select option {% endcomment %}
-            {% comment %} const hiddenSelect = optionBlock.querySelector('.custom-featured-collection__hidden-select');
-            if (hiddenSelect) {
-                hiddenSelect.value = swatch.getAttribute('data-value');
-            } {% endcomment %}
         });
     });
     
