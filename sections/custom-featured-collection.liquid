@@ -253,6 +253,50 @@
             submitBtnText.textContent = 'UNAVAILABLE';
         }
     }
+
+
+    const form = e.target.closest('.custom-featured-collection__modal-form');
+        if (!form) return;
+        
+        e.preventDefault();
+        const submitBtn = form.querySelector('.custom-featured-collection__modal-submit');
+        const submitText = submitBtn.querySelector('span');
+        const originalText = submitText.textContent;
+        
+        submitBtn.disabled = true;
+        submitText.textContent = 'ADDING...';
+
+        const formData = new FormData(form);
+        
+        fetch('/cart/add.js', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          submitText.textContent = 'ADDED!';
+          document.dispatchEvent(new CustomEvent('cart:updated'));
+          setTimeout(() => {
+            submitBtn.disabled = false;
+            submitText.textContent = originalText;
+            
+            // Close modal
+            const modal = form.closest('.custom-featured-collection__modal');
+            if (modal) {
+              modal.classList.remove('is-active');
+              modal.setAttribute('aria-hidden', 'true');
+              document.body.classList.remove('custom-featured-collection-modal-open');
+            }
+          }, 1500);
+        })
+        .catch(error => {
+          console.error('Error adding variant:', error);
+          submitText.textContent = 'ERROR';
+          setTimeout(() => {
+            submitBtn.disabled = false;
+            submitText.textContent = originalText;
+          }, 1500);
+        });
 });
 </script>
 
