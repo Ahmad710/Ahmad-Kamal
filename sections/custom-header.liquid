@@ -3,27 +3,37 @@
 <header class="custom-header custom-header--sticky" id="custom-header-{{ section.id }}">
     <div class="custom-header__container">
         {% comment %} logo {% endcomment %}
-         <div class="custom-header__logo">
-            <a href="{{ routes.root_url }}" class="custom-header__logo-link">
-                {% if section.settings.logo_image != blank %}
-                    {% assign logo_alt = section.settings.logo_image.alt | default: shop.name | escape %}
-                    {{ 
-                        section.settings.logo_image | image_url: width: 600 |
-                        image_tag:  class: 'custom-header__logo-img',
-                        widths: '50, 100, 150, 200, 250, 300, 400, 500, 600',
-                        alt: logo_alt  
-                     }}
-                {% else %}
-                    <span class="custom-header__logo-text"> {{ section.settings.logo_text | default: shop.name }} </span>
-                {% endif %}
-            </a>
-         </div>
+        <div class="custom-header__logo">
+        <a href="{{ routes.root_url }}" class="custom-header__logo-link">
+            {% if section.settings.logo_image != blank %}
+                {% assign logo_alt = section.settings.logo_image.alt | default: shop.name | escape %}
+                {{ 
+                    section.settings.logo_image | image_url: width: 600 |
+                    image_tag:  class: 'custom-header__logo-img',
+                    widths: '50, 100, 150, 200, 250, 300, 400, 500, 600',
+                    alt: logo_alt  
+                    }}
+            {% else %}
+                <span class="custom-header__logo-text"> {{ section.settings.logo_text | default: shop.name }} </span>
+            {% endif %}
+        </a>
+        </div>
+
+        {% comment %} Center text {% endcomment %}
+        <div class="custom-header_text-desktop">
+        <p>{{ section.settings.center_text | escape }}</p>
+        </div>
+
+        {% comment %} Button {% endcomment %}
+        <div class="cudtom-header__button-desktop">
+            {% if section.settings.button_label != blank %}
+                <a href="{{ section.settings.button_link | default: "#" }}" class="custom-header__btn">
+                    <span>{{ section.settings.button_label | escape }}</span>
+                </a>
+            {% endif %}
+        </div>
 
 
-         {% comment %} Center text {% endcomment %}
-          <div class="custom-header_text-desktop">
-            <p>{{ section.settings.center_text | escape }}</p>
-          </div>
     </div>
 </header>
 
