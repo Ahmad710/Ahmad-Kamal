@@ -6,8 +6,15 @@
   }
 {% endstyle %}
 
-<div class="custom-featured-collection" id="custom-featured-collection-{{section.id }}">
-
+<div class="custom-featured-collection" id="custom-featured-collection-{{ section.id }}">
+    <div class="custom-featured-collection__container">
+        <div class="custom-featured-collection__grid">
+            {% assign limit = section.settings.products_to_show %}
+            {% if section.settings.product_list != blank %}
+            {% else %}
+            {% endif %}
+        </div>
+    </div>
 </div>
 
 
