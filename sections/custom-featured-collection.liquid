@@ -147,12 +147,12 @@
     {% comment %} const popup = document.querySelectorAll('.custom-featured-collection__modal'); {% endcomment %}
 
     plusBtn.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function(e) {
             const targetId = button.getAttribute('data-target');
             console.log(targetId);
             const targetModal = document.getElementById(targetId);
             console.log(targetModal);
-            {% comment %} const closeModal = document.getAttribute('data-close-modal'); {% endcomment %}
+            const closeModal = e.target.closet('data-close-modal');
 
             if (targetModal) {
                 targetModal.classList.add('is-active');
@@ -161,7 +161,18 @@
                 document.body.classList.add('custom-featured-collection-modal-open');
             }
 
-            
+            if (closeModal) {
+                const prodId = closeModal.getAttribute('data-close-modal');
+                const modal = document.getElementById('Modal-' + prodId);
+                
+                if (modal) {
+                    targetModal.classList.remove('is-active');
+                targetModal.setAttribute('aria-hidden', 'true');
+                button.setAttribute('aria-expanded', 'false');
+                document.body.classList.remove('custom-featured-collection-modal-open');
+                }
+                
+            }
         });
     });
 
