@@ -187,6 +187,18 @@
             console.log("123")
             const swatchGroup = swatch.closest('.custom-featured-collection__swatches');
             const optionBlock = swatch.closest('.custom-featured-collection__modal-option');
+
+            swatchGroup.querySelectorAll('.custom-featured-collection__swatch').forEach(btn => {
+                btn.classList.remove('is-selected');
+            });
+            swatch.classList.add('is-selected');
+
+            {% comment %} Update hidden select option {% endcomment %}
+            const hiddenSelect - optionBlock.querySelector('.custom-featured-collection__hidden-select');
+            if (hiddenSelect) {
+                hiddenSelect.value = swatch.getAttribute('data-value');
+                hiddenSelect.dispatchEvent(new Event('change', {bubbles: true}));
+            }
         });
     });
     
