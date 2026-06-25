@@ -292,6 +292,7 @@
             .then(data => {
                 document.dispatchEvent(new CustomEvent('cart:updated'));
 
+                const itemsToAdd = [{ id: 1, quantity: 1 }]
                 if(selectedOptions.includes('Black') && selectedOptions.includes('M')) {
                     return fetch(`/products/soft-winter-jacket.js`)
                     .then((res) => res.json()
