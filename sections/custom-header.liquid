@@ -79,10 +79,11 @@
     var mobileMenu = header.querySelector('.custom-header__menu-mobile');
 
     toggleBtn.addEventListener('click', function() {
-        const isExpand = toggleBtn.getAttribute('aria-expanded') === 'true';
+        var isExpand = toggleBtn.getAttribute('aria-expanded') === 'true';
         console.log(isExpand);
 
-        toggleBtn.setAttribute('aria-expanded', 'true');
+        var isExpand = toggleBtn.setAttribute('aria-expanded', 'true');
+        console.log(isExpand);
     });
 
 </script>
