@@ -13,6 +13,21 @@
             {% if section.settings.product_list != blank %}
                 {% for product in section.settings.product_list %}
                     {%- capture hotspot_pos -%} {% cycle 'pos-1', 'pos-2', 'pos-3', 'pos-4', 'pos-5', 'pos-6', %} {%- endcapture -%}
+
+                    <div class="custom-featured-collection__card" data-prodyc-id="{{ product.id }}" data-product-handle="{{ product.handle }}">
+                        <div class="custom-featured-collection__media">
+                            {% if product.featured_media != blank %}
+                                {{ product.featured_media | image_url: width: 1000 | image_tag: 
+                                    class: 'custom-featured-collection__image',
+                                    loading: 'lazy',
+                                    widths: '300, 550, 750, 1000',
+                                    alt: product.featured_media.alt | escape
+                                }}
+                            {% else %}
+                                {{ 'product-1' | placeholder_svg_tag: 'custom-featured-collection__placeholder' }}
+                            {% endif %}
+                        </div>
+                    </div>
                 {% endfor %}
             {% else %}
             {% endif %}
