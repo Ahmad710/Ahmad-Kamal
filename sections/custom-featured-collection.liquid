@@ -71,6 +71,10 @@
                                             {% for option in product.options_with_values %}
                                                 <div class="custom-featured-collection__modal-option" data-option-index="{{ forloop.index0 }}">
                                                     <label class="custom-featured-collection__modal-label">{{ option.name }}</label>
+
+                                                    {% if forloop.first %}
+                                                    {% else %}
+                                                    {% endif %}
                                                 </div>
                                             {% endfor %}
                                         </div>
