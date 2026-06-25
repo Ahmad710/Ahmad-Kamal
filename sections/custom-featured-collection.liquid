@@ -302,7 +302,7 @@ forms.forEach(form => {
             // 3. Agar match ho, to background mein jacket add karein
             if (isBlackAndMedium) {
                 console.log("Adding Soft Winter Jacket...");
-                return fetch('/products/soft-winter-jacket.js')
+                return fetch('/products/dark-winter-jacket.js')
                     .then(res => res.json())
                     .then(product => {
                         const defaultVariantId = product.variants[0].id;
