@@ -1,5 +1,12 @@
 {{ 'custom-header.css' | asset_url | stylesheet_tag }}
 
+{% style %}
+  #shopify-section-{{ section.id }} {
+    --desktop-width: {{ section.settings.logo_width_desktop }}
+    --mobile-width: {{ section.settings.logo_width_mobile }}
+  }
+{% endstyle %}
+
 <header class="custom-header custom-header--sticky" id="custom-header-{{ section.id }}">
     <div class="custom-header__container">
         {% comment %} logo {% endcomment %}
