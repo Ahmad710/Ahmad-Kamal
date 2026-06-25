@@ -83,6 +83,11 @@
                                                                 </button>
                                                             {% endfor %}
                                                          </div>
+
+                                                         {% comment %} select dropdown {% endcomment %}
+                                                         <select name="options[{{ option.name }}]" class="custom-featured-collection__hidden-select" style="display: none;">
+
+                                                         </select>
                                                     {% else %}
                                                     {% endif %}
                                                 </div>
