@@ -111,7 +111,7 @@
                                         </div>
                                     {% endunless %}
 
-                                    <button></button>
+                                    <button type="submit" class="custom-featured-collection__modal-submit" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}></button>
                                 {% endform %}
                             </div>
                          </div>
