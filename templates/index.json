@@ -24,14 +24,7 @@
       "type": "custom-featured-collection",
       "name": "Custom collection",
       "settings": {
-        "product_list": [
-          "black-leather-bag",
-          "blue-silk-tuxedo",
-          "chequered-red-shirt",
-          "classic-leather-jacket",
-          "classic-varsity-top",
-          "dark-denim-top"
-        ],
+        "product_list": [],
         "columns_desktop": 3,
         "products_to_show": 6
       }
