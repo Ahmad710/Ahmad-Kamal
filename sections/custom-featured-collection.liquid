@@ -37,100 +37,100 @@
 
 
                         {% comment %} Popup {% endcomment %}
-                         <div class="custom-featured-collection__modal" id="Modal-{{ product.id }}" aria-hidden="true">
-    <!-- backdrop close typo fixed -->
-    <div class="custom-featured-collection__modal-backdrop" data-close-modal="{{ product.id }}"></div>
+                        <div class="custom-featured-collection__modal" id="Modal-{{ product.id }}" aria-hidden="true">
+                            <!-- backdrop close typo fixed -->
+                            <div class="custom-featured-collection__modal-backdrop" data-close-modal="{{ product.id }}"></div>
 
-    <div class="custom-featured-collection__modal-content">
-        <button type="button" class="custom-featured-collection__modal-close" data-close-modal="{{ product.id }}" aria-label="Close Modal">&times;</button>
+                            <div class="custom-featured-collection__modal-content">
+                                <button type="button" class="custom-featured-collection__modal-close" data-close-modal="{{ product.id }}" aria-label="Close Modal">&times;</button>
 
-        <div class="custom-featured-collection__modal-header">
-            <div class="custom-featured-collection__modal-img-wrapper">
-                {% if product.featured_media != blank %}
-                    <img src="{{ product.featured_media | image_url: width: 300 }}" alt="{{ product.title | escape }}" class="custom-featured-collection__modal-img" loading="lazy">
-                {% else %}
-                    {{ 'product-1' | placeholder_svg_tag: 'custom-featured-collection__modal-placeholder' }}
-                {% endif %}
-            </div>
-            <div class="custom-featured-collection__modal-info">
-                <h3 class="custom-featured-collection__modal-title">{{ product.title }}</h3>
-                <p class="custom-featured-collection__modal-price">{{ product.price | money }}</p>
-                {% if product.description != blank %}
-                    <p class="custom-featured-collection__modal-desc">
-                        {{ product.description | strip_html | truncatewords: 20 }}
-                    </p>
-                {% endif %}
-            </div>
-        </div>
+                                <div class="custom-featured-collection__modal-header">
+                                    <div class="custom-featured-collection__modal-img-wrapper">
+                                        {% if product.featured_media != blank %}
+                                            <img src="{{ product.featured_media | image_url: width: 300 }}" alt="{{ product.title | escape }}" class="custom-featured-collection__modal-img" loading="lazy">
+                                        {% else %}
+                                            {{ 'product-1' | placeholder_svg_tag: 'custom-featured-collection__modal-placeholder' }}
+                                        {% endif %}
+                                    </div>
+                                    <div class="custom-featured-collection__modal-info">
+                                        <h3 class="custom-featured-collection__modal-title">{{ product.title }}</h3>
+                                        <p class="custom-featured-collection__modal-price">{{ product.price | money }}</p>
+                                        {% if product.description != blank %}
+                                            <p class="custom-featured-collection__modal-desc">
+                                                {{ product.description | strip_html | truncatewords: 20 }}
+                                            </p>
+                                        {% endif %}
+                                    </div>
+                                </div>
 
-        {% form 'product', product, class: 'custom-featured-collection__modal-form' %}
-            <!-- 1. Product Variants JSON (ADDED) -->
-            <script type="application/json" class="product-variants-json">
-              {{ product.variants | json }}
-            </script>
+                                {% form 'product', product, class: 'custom-featured-collection__modal-form' %}
+                                    <!-- 1. Product Variants JSON (ADDED) -->
+                                    <script type="application/json" class="product-variants-json">
+                                    {{ product.variants | json }}
+                                    </script>
 
-            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                                    <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
 
-            {% unless product.has_only_default_variant %}
-                <div class="custom-featured-collection__modal-options">
-                    {% for option in product.options_with_values %}
-                        <div class="custom-featured-collection__modal-option" data-option-index="{{ forloop.index0 }}">
-                            <label class="custom-featured-collection__modal-label">{{ option.name }}</label>
+                                    {% unless product.has_only_default_variant %}
+                                        <div class="custom-featured-collection__modal-options">
+                                            {% for option in product.options_with_values %}
+                                                <div class="custom-featured-collection__modal-option" data-option-index="{{ forloop.index0 }}">
+                                                    <label class="custom-featured-collection__modal-label">{{ option.name }}</label>
 
-                            {% if forloop.first %}
-                                 {% comment %} swatches {% endcomment %}
-                                 <div class="custom-featured-collection__swatches">
-                                    {% for value in option.values %}
-                                        <!-- data-value typo FIXED -->
-                                        <button type="button" class="custom-featured-collection__swatch {% if option.selected_value == value %} is-selected {% endif %}"
-                                        data-value="{{ value | escape }}">
-                                            <span class="custom-featured-collection__swatch-color" style="background-color: {{ value | downcase }}"></span>
-                                            <span class="custom-featured-collection__swatch-text">{{ value }}</span>
-                                        </button>
-                                    {% endfor %}
-                                 </div>
+                                                    {% if forloop.first %}
+                                                        {% comment %} swatches {% endcomment %}
+                                                        <div class="custom-featured-collection__swatches">
+                                                            {% for value in option.values %}
+                                                                <!-- data-value typo FIXED -->
+                                                                <button type="button" class="custom-featured-collection__swatch {% if option.selected_value == value %} is-selected {% endif %}"
+                                                                data-value="{{ value | escape }}">
+                                                                    <span class="custom-featured-collection__swatch-color" style="background-color: {{ value | downcase }}"></span>
+                                                                    <span class="custom-featured-collection__swatch-text">{{ value }}</span>
+                                                                </button>
+                                                            {% endfor %}
+                                                        </div>
 
-                                 <!-- Hidden Select dropdown for swatches (ADDED BACK) -->
-                                 <select name="options[{{ option.name }}]" class="custom-featured-collection__hidden-select" style="display: none;">
-                                    {% for value in option.values %}
-                                        <option value="{{ value | escape }}" {% if option.selected_value == value %}selected="selected"{% endif %}>
-                                            {{ value }}
-                                        </option>
-                                    {% endfor %}
-                                 </select>
-                            {% else %}
-                                 {% comment %} dropdown for other option {% endcomment %}
-                                 <div class="custom-featured-collection__select-wrapper">
-                                    <select name="options[{{ option.name }}]" class="custom-featured-collection__modal-select">
-                                        <option value="" disabled {% if option.selected_value == blank %}selected{% endif %}>Choose your {{ option.name | downcase }}</option>
-                                        {% for value in option.values %}
-                                            <!-- Selected check FIXED -->
-                                            <option value="{{ value | escape }}" {% if option.selected_value == value %}selected="selected"{% endif %}>
-                                                {{ value }}
-                                            </option>
-                                        {% endfor %}
-                                    </select>
-                                    {{ 'custom-arrow-down.svg' | inline_asset_content }}
-                                 </div>
-                            {% endif %}
+                                                        <!-- Hidden Select dropdown for swatches (ADDED BACK) -->
+                                                        <select name="options[{{ option.name }}]" class="custom-featured-collection__hidden-select" style="display: none;">
+                                                            {% for value in option.values %}
+                                                                <option value="{{ value | escape }}" {% if option.selected_value == value %}selected="selected"{% endif %}>
+                                                                    {{ value }}
+                                                                </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    {% else %}
+                                                        {% comment %} dropdown for other option {% endcomment %}
+                                                        <div class="custom-featured-collection__select-wrapper">
+                                                            <select name="options[{{ option.name }}]" class="custom-featured-collection__modal-select">
+                                                                <option value="" disabled {% if option.selected_value == blank %}selected{% endif %}>Choose your {{ option.name | downcase }}</option>
+                                                                {% for value in option.values %}
+                                                                    <!-- Selected check FIXED -->
+                                                                    <option value="{{ value | escape }}" {% if option.selected_value == value %}selected="selected"{% endif %}>
+                                                                        {{ value }}
+                                                                    </option>
+                                                                {% endfor %}
+                                                            </select>
+                                                            {{ 'custom-arrow-down.svg' | inline_asset_content }}
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    {% endunless %}
+
+                                    <button type="submit" class="custom-featured-collection__modal-submit" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+                                        <span>
+                                            {% if product.selected_or_first_available_variant.available %}
+                                                Add to Cart
+                                            {% else %}
+                                                Sold out
+                                            {% endif %}
+                                        </span>
+                                        {{ 'custom-white-arrow.svg' | inline_asset_content }}
+                                    </button>
+                                {% endform %}
+                            </div>
                         </div>
-                    {% endfor %}
-                </div>
-            {% endunless %}
-
-            <button type="submit" class="custom-featured-collection__modal-submit" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
-                <span>
-                    {% if product.selected_or_first_available_variant.available %}
-                        Add to Cart
-                    {% else %}
-                        Sold out
-                    {% endif %}
-                </span>
-                {{ 'custom-white-arrow.svg' | inline_asset_content }}
-            </button>
-        {% endform %}
-    </div>
-</div>
                     </div>
                 {% endfor %}
             {% else %}
