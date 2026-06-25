@@ -142,14 +142,17 @@
 </div>
 
 <script>
-    const plusBtn = document.querySelector('.custom-featured-collection__hotspot');
+    const plusBtn = document.querySelectorAll('.custom-featured-collection__hotspot');
     const closeBtn = document.querySelector('.custom-featured-collection__modal-close');
     const popup = document.getElementById('Modal-{{ product.id }}');
 
-    plusBtn.addEventListener('click', function() {
-      console.log("123");
-      popup.classList.add('is-active');
+    plusBtn.forEach(button => {
+        button.addEventListener('click', function() {
+            console.log("123");
+            popup.classList.add('is-active');
+        });
     });
+    
 </script>
 
 
