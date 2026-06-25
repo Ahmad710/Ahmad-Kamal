@@ -174,59 +174,86 @@
         });
     });
 
-    colorSwatch.forEach(swatch => {
+  document.addEventListener('DOMContentLoaded', function() {
+    
+    // 1. Color Swatches (Buttons) click listener
+    const colorSwatches = document.querySelectorAll('.custom-featured-collection__swatch');
+    
+    colorSwatches.forEach(swatch => {
         swatch.addEventListener('click', function() {
-            console.log("123");
             const swatchGroup = swatch.closest('.custom-featured-collection__swatches');
             const optionBlock = swatch.closest('.custom-featured-collection__modal-option');
+            const modal = swatch.closest('.custom-featured-collection__modal'); // modal ko yahan select kiya
 
-            console.log(swatchGroup);
-            console.log(optionBlock);
+            if (!swatchGroup || !optionBlock || !modal) return;
 
+            // Swatches ki class toggle karein
             swatchGroup.querySelectorAll('.custom-featured-collection__swatch').forEach(btn => {
                 btn.classList.remove('is-selected');
             });
             swatch.classList.add('is-selected');
+
+            // Hidden select ki value ko swatch button ke data-value se update karein
+            const hiddenSelect = optionBlock.querySelector('.custom-featured-collection__hidden-select');
+            if (hiddenSelect) {
+                hiddenSelect.value = swatch.getAttribute('data-value');
+            }
+
+            // Variant ko update karne wala function call karein
+            updateVariant(modal);
         });
     });
 
-    {% comment %} read variant data {% endcomment %}
-    const variantsJsonEl = modal.querySelector('.product-variants-json');
-    if (!variantsJsonEl) return;
-    const variants = JSON.parse(variantsJsonEl.textContent);
-
-    {% comment %} create array for variants {% endcomment %}
-    const selectedOptions = [];
-    modal.querySelectorAll('.custom-featured-collection__modal-option select').forEach(select => {
-        selectedOptions.push(select.value);
+    // 2. Normal dropdown selects change listener
+    const selects = document.querySelectorAll('.custom-featured-collection__modal-select');
+    selects.forEach(select => {
+        select.addEventListener('change', function() {
+            const modal = select.closest('.custom-featured-collection__modal');
+            if (modal) {
+                updateVariant(modal);
+            }
+        });
     });
 
-    {% comment %} match variants in db {% endcomment %}
-    const matchedVariant = variants.find(variant => {
-        return variant.options.every((opt, index) => opt === selectedOptions[index]);
-    });
+    // 3. MAIN FUNCTION: Jo variant match karega aur update karega
+    function updateVariant(modal) {
+        const variantsJsonEl = modal.querySelector('.product-variants-json');
+        if (!variantsJsonEl) return; // Ab yeh return sahi chalega kyunki yeh function ke andar hai!
 
-    {% comment %} manage cart btn {% endcomment %}
-    const idInput = modal.querySelector('input[name="id"]');
-    const submitBtn = modal.querySelector('.custom-featured-collection__modal-submit');
-    const submitBtnText = submitBtn.querySelector('span');
+        const variants = JSON.parse(variantsJsonEl.textContent);
 
-    // 5. Agar variant mil jaye to add to cart enable karein
-    if (matchedVariant) {
-        idInput.value = matchedVariant.id; // Hidden ID update ho gayi
+        // Select kiye hue options ko array mein jama karein
+        const selectedOptions = [];
+        modal.querySelectorAll('.custom-featured-collection__modal-option select').forEach(select => {
+            selectedOptions.push(select.value);
+        });
 
-        if (matchedVariant.available) {
-        submitBtn.disabled = false;
-        submitBtnText.textContent = 'ADD TO CART';
+        // Variant match karein
+        const matchedVariant = variants.find(variant => {
+            return variant.options.every((opt, index) => opt === selectedOptions[index]);
+        });
+
+        const idInput = modal.querySelector('input[name="id"]');
+        const submitBtn = modal.querySelector('.custom-featured-collection__modal-submit');
+        const submitBtnText = submitBtn.querySelector('span');
+
+        if (matchedVariant) {
+            idInput.value = matchedVariant.id; // Hidden ID update ho gayi
+
+            if (matchedVariant.available) {
+                submitBtn.disabled = false;
+                submitBtnText.textContent = 'ADD TO CART';
+            } else {
+                submitBtn.disabled = true;
+                submitBtnText.textContent = 'SOLD OUT';
+            }
         } else {
-        submitBtn.disabled = true;
-        submitBtnText.textContent = 'SOLD OUT';
+            // Agar variant combination market mein available nahi hai
+            submitBtn.disabled = true;
+            submitBtnText.textContent = 'UNAVAILABLE';
         }
-    } else {
-        // Agar variant mojood nahi hai
-        submitBtn.disabled = true;
-        submitBtnText.textContent = 'UNAVAILABLE';
     }
+});
 </script>
 
 
