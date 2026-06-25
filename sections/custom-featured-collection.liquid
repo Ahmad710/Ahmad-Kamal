@@ -272,85 +272,42 @@
     }
 
     const forms = document.querySelectorAll('.custom-featured-collection__modal-form');
+    forms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
 
-forms.forEach(form => {
-    form.addEventListener('submit', async function(e) {
-        e.preventDefault();
-
-        try {
-            // 1. Selected options collect karein (aur lowercase mein convert karein)
+            // 1. Check karein ke options mein "Black" aur "Medium" selected hain ya nahi
             const selectedOptions = [];
             form.querySelectorAll('.custom-featured-collection__hidden-select, .custom-featured-collection__modal-select').forEach(select => {
-                if (select.value) {
-                    selectedOptions.push(select.value.toLowerCase().trim());
-                }
+                selectedOptions.push(select.value);
             });
+            
+            const isBlackAndMedium = selectedOptions.includes('Black') && selectedOptions.includes('Medium');
 
-            // Live debug karne ke liye console log
-            console.log("Selected values:", selectedOptions);
-
-            // Check match: "black" aur "medium" ya "m"
-            const isBlack = selectedOptions.includes('black');
-            const isMedium = selectedOptions.includes('medium') || selectedOptions.includes('m');
-            const isBlackAndMedium = isBlack && isMedium;
-
-            console.log("Is Black & Medium?:", isBlackAndMedium);
-
-            // 2. Main product add karein
-            const response = await fetch('/cart/add.js', {
+            // Simple fetch request
+            fetch('/cart/add.js', {
                 method: 'POST',
                 body: new FormData(form)
-            });
-            await response.json();
-
-            // 3. Agar match ho, to jacket add karein
-            if (isBlackAndMedium) {
-                console.log("Black and Medium matched! Attempting to add jacket...");
-                
-                try {
-                    // Jacket product details fetch karein
-                    const productRes = await fetch('/products/soft-winter-jacket.js');
-                    
-                    if (productRes.ok) {
-                        const productData = await productRes.json();
-                        const defaultVariantId = productData.variants[0].id;
-
-                        // Jacket cart mein add karein
-                        await fetch('/cart/add.js', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                id: defaultVariantId,
-                                quantity: 1
-                            })
-                        });
-                        console.log("Jacket successfully added to cart!");
-                    } else {
-                        console.warn("Product handle 'soft-winter-jacket' nahi mila. Please check jacket URL handle in Shopify.");
-                    }
-                } catch (jacketErr) {
-                    console.error("Jacket add karne mein error:", jacketErr);
-                }
-            }
-
-            // 4. Cart drawer update karein
-            document.dispatchEvent(new CustomEvent('cart:updated'));
-
-            // 5. Modal band karein
-            setTimeout(() => {
-                const modal = form.closest('.custom-featured-collection__modal');
-                if (modal) {
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Cart count ya drawer update karne ke liye event (Zaroori hai)
+                document.dispatchEvent(new CustomEvent('cart:updated'));
+                setTimeout(() => {
+                    // Close modal
+                    const modal = form.closest('.custom-featured-collection__modal');
+                    if (modal) {
                     modal.classList.remove('is-active');
                     modal.setAttribute('aria-hidden', 'true');
                     document.body.classList.remove('custom-featured-collection-modal-open');
-                }
-            }, 1500);
-
-        } catch (error) {
+                    }
+                }, 1500);
+            })
+            .catch(error => {
             console.error('Error adding to cart:', error);
-        }
+            });
+        });
     });
-});
 });
 </script>
 
