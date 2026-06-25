@@ -272,72 +272,41 @@
     }
 
     const forms = document.querySelectorAll('.custom-featured-collection__modal-form');
+    forms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
 
-forms.forEach(form => {
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
+            // 1. Check karein ke options mein "Black" aur "Medium" selected hain ya nahi
+            const selectedOptions = [];
+            form.querySelectorAll('.custom-featured-collection__hidden-select, .custom-featured-collection__modal-select').forEach(select => {
+                selectedOptions.push(select.value);
+            });
+            
+            console.log(selectedOptions);
+            // Simple fetch request
+            fetch('/cart/add.js', {
+                method: 'POST',
+                body: new FormData(form)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.dispatchEvent(new CustomEvent('cart:updated'));
 
-        // 1. Options values collect karein
-        const selectedOptions = [];
-        form.querySelectorAll('.custom-featured-collection__hidden-select, .custom-featured-collection__modal-select').forEach(select => {
-            selectedOptions.push(select.value);
-        });
-        
-        console.log("Selected Options:", selectedOptions);
-
-        // Case-insensitive checking for "black" and "medium" (or "m")
-        const isBlack = selectedOptions.some(opt => opt && opt.toLowerCase().trim() === 'black');
-        const isMedium = selectedOptions.some(opt => opt && (opt.toLowerCase().trim() === 'medium' || opt.toLowerCase().trim() === 'm'));
-        const isBlackAndMedium = isBlack && isMedium;
-
-        console.log("Is Black & Medium?:", isBlackAndMedium);
-
-        // 2. Pehla product add karein
-        fetch('/cart/add.js', {
-            method: 'POST',
-            body: new FormData(form)
-        })
-        .then(response => response.json())
-        .then(data => {
-            // 3. Agar match ho, to background mein jacket add karein
-            if (isBlackAndMedium) {
-                console.log("Adding Soft Winter Jacket...");
-                return fetch('/products/dark-winter-jacket.js')
-                    .then(res => res.json())
-                    .then(product => {
-                        const defaultVariantId = product.variants[0].id;
-                        
-                        return fetch('/cart/add.js', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                id: defaultVariantId,
-                                quantity: 1
-                            })
-                        });
-                    });
-            }
-        })
-        .then(() => {
-            // 4. Cart drawer update karein aur modal close karein
-            document.dispatchEvent(new CustomEvent('cart:updated'));
-
-            setTimeout(() => {
-                const modal = form.closest('.custom-featured-collection__modal');
-                if (modal) {
-                    modal.classList.remove('is-active');
-                    modal.setAttribute('aria-hidden', 'true');
-                    document.body.classList.remove('custom-featured-collection-modal-open');
-                }
-            }, 1500);
-        })
-        .catch(error => {
+                setTimeout(() => {
+                    // Close modal
+                    const modal = form.closest('.custom-featured-collection__modal');
+                    if (modal) {
+                        modal.classList.remove('is-active');
+                        modal.setAttribute('aria-hidden', 'true');
+                        document.body.classList.remove('custom-featured-collection-modal-open');
+                    }
+                }, 1500);
+            })
+            .catch(error => {
             console.error('Error adding to cart:', error);
+            });
         });
     });
-});
-
-
 });
 </script>
 
