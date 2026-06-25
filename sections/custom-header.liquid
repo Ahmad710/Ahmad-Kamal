@@ -2,7 +2,20 @@
 
 <header class="custom-header custom-header--sticky" id="custom-header-{{ section.id }}">
     <div class="custom-header__container">
-        
+        {% comment %} logo {% endcomment %}
+         <div class="custom-header__logo">
+            <a href="{{ routes.root_url }}" class="custom-header__logo-link">
+                {% if section.settings.logo_image != blank %}
+                    {% assign logo_alt = section.settings.logo_image.alt | default: shop.name | escape %}
+                    {{ 
+                        section.settings.logo_image | image_url: width: 600 |
+                        image_tag:  class: 'custom-header__logo-img',
+                        widths: '50, 100, 150, 200, 250, 300, 400, 500, 600',
+                        alt: logo_alt  
+                     }}
+                {% endif %}
+            </a>
+         </div>
     </div>
 </header>
 
