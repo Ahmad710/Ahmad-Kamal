@@ -91,11 +91,13 @@
             hamburgerIcon.style.display = 'none';
             closeIcon.style.display = 'block';
             mobileMenu.classList.add('is-open');
+            document.body.classList.add('custom-header-menu-active');
         }
         else {
             hamburgerIcon.style.display = 'block';
             closeIcon.style.display = 'none';
             mobileMenu.classList.rmove('is-open');
+            document.body.classList.remove('custom-header-menu-active');
         }
     });
 
