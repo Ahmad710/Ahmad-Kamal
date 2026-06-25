@@ -189,8 +189,8 @@ body.custom-featured-collection-modal-open {
 /* Close Trigger */
 .custom-featured-collection__modal-close {
     position: absolute;
-    top: 15px;
-    right: 15px;
+    top: 5px;
+    right: 5px;
     background: none;
     border: none;
     font-size: 32px;
