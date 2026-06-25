@@ -276,7 +276,7 @@
         form.addEventListener('submit', function(e) {
             e.preventDefault();
 
-            // 1. Check karein ke options mein "Black" aur "Medium" selected hain ya nahi
+            {% comment %} Check "Black" aur "Medium" variant  {% endcomment %}
             const selectedOptions = [];
             form.querySelectorAll('.custom-featured-collection__hidden-select, .custom-featured-collection__modal-select').forEach(select => {
                 selectedOptions.push(select.value);
@@ -296,16 +296,12 @@
             })
             .then(response => response.json())
             .then(data => {
-                // 3. Agar match ho, to jacket check karein
+                {% comment %} match black and medium variant {% endcomment %}
                 if (isBlackAndMedium) {
                     console.log("Adding Soft Winter Jacket...");
                     
                     return fetch('/products/dark-winter-jacket.js')
                     .then(res => {
-                        // Agar handle galat hai ya 404 error hai
-                        if (!res.ok) {
-                            throw new Error("Jacket product handle 'soft-winter-jacket' nahi mila. Shopify admin mein handle check karein.");
-                        }
                         return res.json();
                     })
                     .then(product => {
