@@ -142,9 +142,8 @@
       "custom-header": {
         "type": "custom-header",
         "settings": {
-          "logo_image": "shopify://shop_images/city-woman-fashion_925x_2x_e91139c3-68ff-49da-98c9-5a56a049fb30.jpg",
           "logo_text": "TISSO VISION",
-          "logo_width_desktop": 50,
+          "logo_width_desktop": 150,
           "logo_width_mobile": 90,
           "center_text": "Find the ideal gift for your loved ones.",
           "button_label": "Choose Gift",
