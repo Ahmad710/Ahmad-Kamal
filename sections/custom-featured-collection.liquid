@@ -272,16 +272,15 @@
     }
 
 
-        const forms = document.querySelectorAll('.custom-featured-collection__modal-form');
-
-        forms.forEach(form => {
+    const forms = document.querySelectorAll('.custom-featured-collection__modal-form');
+    forms.forEach(form => {
         form.addEventListener('submit', function(e) {
             e.preventDefault(); // Default reload roka
 
             // Simple fetch request
             fetch('/cart/add.js', {
-            method: 'POST',
-            body: new FormData(form)
+                method: 'POST',
+                body: new FormData(form)
             })
             .then(response => response.json())
             .then(data => {
@@ -301,7 +300,7 @@
             console.error('Error adding to cart:', error);
             });
         });
-        });
+    });
 });
 </script>
 
