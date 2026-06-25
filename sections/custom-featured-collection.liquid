@@ -152,7 +152,7 @@
             console.log(targetId);
             const targetModal = document.getElementById(targetId);
             console.log(targetModal);
-            const closeModal = e.target.closet('[data-close-modal]');
+            const closeModal = e.target.closest('[data-close-modal]');
 
             if (targetModal) {
                 targetModal.classList.add('is-active');
