@@ -41,7 +41,9 @@
 
     {% comment %} bottom text {% endcomment %}
     {% if section.settings.bottom_text != blank %} 
-        <div></div>
+        <div class="custom-banner__ticker">
+            <p class="custom-banner__ticker-text">{{ section.settings.bottom_text | escape }}</p>
+        </div>
     {% endif %}
 
 </div>
