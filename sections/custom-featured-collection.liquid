@@ -200,7 +200,6 @@
             const hiddenSelect = optionBlock.querySelector('.custom-featured-collection__hidden-select');
             if (hiddenSelect) {
                 hiddenSelect.value = swatch.getAttribute('data-value');
-                hiddenSelect.dispatchEvent(new Event('change', {bubbles: true}));
             }
         });
     });
