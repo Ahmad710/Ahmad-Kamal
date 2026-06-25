@@ -234,10 +234,10 @@
 
     // 3. MAIN FUNCTION: Jo variant match karega aur update karega
     function updateVariant(modal) {
-        const variantsJsonEl = modal.querySelector('.product-variants-json');
-        if (!variantsJsonEl) return; // Ab yeh return sahi chalega kyunki yeh function ke andar hai!
+        const variantsData = modal.querySelector('.product-variants-json');
+        if (!variantsData) return;
 
-        const variants = JSON.parse(variantsJsonEl.textContent);
+        const variants = JSON.parse(variantsData.textContent);
 
         // Select kiye hue options ko array mein jama karein
         const selectedOptions = [];
@@ -270,7 +270,6 @@
             submitBtnText.textContent = 'UNAVAILABLE';
         }
     }
-
 
     const forms = document.querySelectorAll('.custom-featured-collection__modal-form');
     forms.forEach(form => {
