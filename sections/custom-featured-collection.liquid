@@ -37,9 +37,8 @@
 
 
                         {% comment %} Popup {% endcomment %}
-                        <div class="custom-featured-collection__modal" id="Modal-{{ product.id }}" aria-hidden="true">
-                            <!-- backdrop close typo fixed -->
-                            <div class="custom-featured-collection__modal-backdrop" data-close-modal="{{ product.id }}"></div>
+                         <div class="custom-featured-collection__modal" id="Modal-{{ product.id }}" aria-hidden="true">
+                            <div class="custom-featured-collection__modal-backdrop" data-close-mdal={{ product.id }}></div>
 
                             <div class="custom-featured-collection__modal-content">
                                 <button type="button" class="custom-featured-collection__modal-close" data-close-modal="{{ product.id }}" aria-label="Close Modal">&times;</button>
@@ -57,18 +56,13 @@
                                         <p class="custom-featured-collection__modal-price">{{ product.price | money }}</p>
                                         {% if product.description != blank %}
                                             <p class="custom-featured-collection__modal-desc">
-                                                {{ product.description | strip_html | truncatewords: 20 }}
+                                                {{ product.description | strip_html |truncatewords: 20 }}
                                             </p>
                                         {% endif %}
                                     </div>
                                 </div>
 
                                 {% form 'product', product, class: 'custom-featured-collection__modal-form' %}
-                                    <!-- 1. Product Variants JSON (ADDED) -->
-                                    <script type="application/json" class="product-variants-json">
-                                    {{ product.variants | json }}
-                                    </script>
-
                                     <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
 
                                     {% unless product.has_only_default_variant %}
@@ -79,39 +73,28 @@
 
                                                     {% if forloop.first %}
                                                         {% comment %} swatches {% endcomment %}
-                                                        <div class="custom-featured-collection__swatches">
+                                                         <div class="custom-featured-collection__swatches">
                                                             {% for value in option.values %}
-                                                                <!-- data-value typo FIXED -->
                                                                 <button type="button" class="custom-featured-collection__swatch {% if option.selected_value == value %} is-selected {% endif %}"
-                                                                data-value="{{ value | escape }}">
+                                                                data-vlaue="{{ value | escape }}">
                                                                     <span class="custom-featured-collection__swatch-color" style="background-color: {{ value | downcase }}"></span>
                                                                     <span class="custom-featured-collection__swatch-text">{{ value }}</span>
                                                                 </button>
                                                             {% endfor %}
-                                                        </div>
-
-                                                        <!-- Hidden Select dropdown for swatches (ADDED BACK) -->
-                                                        <select name="options[{{ option.name }}]" class="custom-featured-collection__hidden-select" style="display: none;">
-                                                            {% for value in option.values %}
-                                                                <option value="{{ value | escape }}" {% if option.selected_value == value %}selected="selected"{% endif %}>
-                                                                    {{ value }}
-                                                                </option>
-                                                            {% endfor %}
-                                                        </select>
+                                                         </div>
                                                     {% else %}
                                                         {% comment %} dropdown for other option {% endcomment %}
-                                                        <div class="custom-featured-collection__select-wrapper">
+                                                         <div class="custom-featured-collection__select-wrapper">
                                                             <select name="options[{{ option.name }}]" class="custom-featured-collection__modal-select">
                                                                 <option value="" disabled {% if option.selected_value == blank %}selected{% endif %}>Choose your {{ option.name | downcase }}</option>
                                                                 {% for value in option.values %}
-                                                                    <!-- Selected check FIXED -->
-                                                                    <option value="{{ value | escape }}" {% if option.selected_value == value %}selected="selected"{% endif %}>
+                                                                    <option value="{{ value | escape }}" {% if option.selected_value == blank %}selected = "selected"{% endif %}>
                                                                         {{ value }}
                                                                     </option>
                                                                 {% endfor %}
                                                             </select>
                                                             {{ 'custom-arrow-down.svg' | inline_asset_content }}
-                                                        </div>
+                                                         </div>
                                                     {% endif %}
                                                 </div>
                                             {% endfor %}
@@ -130,7 +113,7 @@
                                     </button>
                                 {% endform %}
                             </div>
-                        </div>
+                         </div>
                     </div>
                 {% endfor %}
             {% else %}
@@ -192,41 +175,37 @@
         });
     });
 
-document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function() {
     
-    // ==========================================
-    // 1. COLOR SWATCHES CLICK HANDLING
-    // ==========================================
+    // 1. Color Swatches (Buttons) click listener
     const colorSwatches = document.querySelectorAll('.custom-featured-collection__swatch');
     
     colorSwatches.forEach(swatch => {
         swatch.addEventListener('click', function() {
             const swatchGroup = swatch.closest('.custom-featured-collection__swatches');
             const optionBlock = swatch.closest('.custom-featured-collection__modal-option');
-            const modal = swatch.closest('.custom-featured-collection__modal');
+            const modal = swatch.closest('.custom-featured-collection__modal'); // modal ko yahan select kiya
 
             if (!swatchGroup || !optionBlock || !modal) return;
 
-            // Swatch class update karein
+            // Swatches ki class toggle karein
             swatchGroup.querySelectorAll('.custom-featured-collection__swatch').forEach(btn => {
                 btn.classList.remove('is-selected');
             });
             swatch.classList.add('is-selected');
 
-            // Hidden select dropdown update karein
+            // Hidden select ki value ko swatch button ke data-value se update karein
             const hiddenSelect = optionBlock.querySelector('.custom-featured-collection__hidden-select');
             if (hiddenSelect) {
                 hiddenSelect.value = swatch.getAttribute('data-value');
             }
 
-            // Variant check karein
+            // Variant ko update karne wala function call karein
             updateVariant(modal);
         });
     });
 
-    // ==========================================
-    // 2. DROPDOWN SELECTION CHANGE HANDLING
-    // ==========================================
+    // 2. Normal dropdown selects change listener
     const selects = document.querySelectorAll('.custom-featured-collection__modal-select');
     selects.forEach(select => {
         select.addEventListener('change', function() {
@@ -237,16 +216,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // ==========================================
-    // 3. VARIANT MATCHING FUNCTION
-    // ==========================================
+    // 3. MAIN FUNCTION: Jo variant match karega aur update karega
     function updateVariant(modal) {
         const variantsJsonEl = modal.querySelector('.product-variants-json');
-        if (!variantsJsonEl) return;
+        if (!variantsJsonEl) return; // Ab yeh return sahi chalega kyunki yeh function ke andar hai!
 
         const variants = JSON.parse(variantsJsonEl.textContent);
 
-        // Selected options arrays mein dalein
+        // Select kiye hue options ko array mein jama karein
         const selectedOptions = [];
         modal.querySelectorAll('.custom-featured-collection__modal-option select').forEach(select => {
             selectedOptions.push(select.value);
@@ -262,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const submitBtnText = submitBtn.querySelector('span');
 
         if (matchedVariant) {
-            idInput.value = matchedVariant.id; // Correct ID update ho gayi!
+            idInput.value = matchedVariant.id; // Hidden ID update ho gayi
 
             if (matchedVariant.available) {
                 submitBtn.disabled = false;
@@ -272,65 +249,53 @@ document.addEventListener('DOMContentLoaded', function() {
                 submitBtnText.textContent = 'SOLD OUT';
             }
         } else {
+            // Agar variant combination market mein available nahi hai
             submitBtn.disabled = true;
             submitBtnText.textContent = 'UNAVAILABLE';
         }
     }
 
-    // ==========================================
-    // 4. AJAX SUBMIT HANDLING (FIXED & MERGED)
-    // ==========================================
-    const forms = document.querySelectorAll('.custom-featured-collection__modal-form');
-    
-    forms.forEach(form => {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault(); // Default reload ko rok diya
 
-            const submitBtn = form.querySelector('.custom-featured-collection__modal-submit');
-            const submitText = submitBtn.querySelector('span');
-            const originalText = submitText.textContent;
-            
-            submitBtn.disabled = true;
-            submitText.textContent = 'ADDING...';
+        e.preventDefault();
+        const submitBtn = form.querySelector('.custom-featured-collection__modal-submit');
+        const submitText = submitBtn.querySelector('span');
+        const originalText = submitText.textContent;
+        
+        submitBtn.disabled = true;
+        submitText.textContent = 'ADDING...';
 
-            // FormData automatic updated hidden input "id" ko collect karega
-            const formData = new FormData(form);
+        const formData = new FormData(form);
+        
+        fetch('/cart/add.js', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          submitText.textContent = 'ADDED!';
+          document.dispatchEvent(new CustomEvent('cart:updated'));
+          setTimeout(() => {
+            submitBtn.disabled = false;
+            submitText.textContent = originalText;
             
-            fetch('/cart/add.js', {
-              method: 'POST',
-              body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-              submitText.textContent = 'ADDED!';
-              
-              // Cart update event dispatch karein
-              document.dispatchEvent(new CustomEvent('cart:updated'));
-              
-              setTimeout(() => {
-                submitBtn.disabled = false;
-                submitText.textContent = originalText;
-                
-                // Modal band karein
-                const modal = form.closest('.custom-featured-collection__modal');
-                if (modal) {
-                  modal.classList.remove('is-active');
-                  modal.setAttribute('aria-hidden', 'true');
-                  document.body.classList.remove('custom-featured-collection-modal-open');
-                }
-              }, 1500);
-            })
-            .catch(error => {
-              console.error('Error adding variant:', error);
-              submitText.textContent = 'ERROR';
-              setTimeout(() => {
-                submitBtn.disabled = false;
-                submitText.textContent = originalText;
-              }, 1500);
-            });
+            // Close modal
+            const modal = form.closest('.custom-featured-collection__modal');
+            if (modal) {
+              modal.classList.remove('is-active');
+              modal.setAttribute('aria-hidden', 'true');
+              document.body.classList.remove('custom-featured-collection-modal-open');
+            }
+          }, 1500);
+        })
+        .catch(error => {
+          console.error('Error adding variant:', error);
+          submitText.textContent = 'ERROR';
+          setTimeout(() => {
+            submitBtn.disabled = false;
+            submitText.textContent = originalText;
+          }, 1500);
         });
     });
-});
 </script>
 
 
