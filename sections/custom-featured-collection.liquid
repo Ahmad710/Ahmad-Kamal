@@ -285,8 +285,17 @@
             })
             .then(response => response.json())
             .then(data => {
-            // Cart count ya drawer update karne ke liye event (Zaroori hai)
-            document.dispatchEvent(new CustomEvent('cart:updated'));
+                // Cart count ya drawer update karne ke liye event (Zaroori hai)
+                document.dispatchEvent(new CustomEvent('cart:updated'));
+                setTimeout(() => {
+                    // Close modal
+                    const modal = form.closest('.custom-featured-collection__modal');
+                    if (modal) {
+                    modal.classList.remove('is-active');
+                    modal.setAttribute('aria-hidden', 'true');
+                    document.body.classList.remove('custom-featured-collection-modal-open');
+                    }
+                }, 1500);
             })
             .catch(error => {
             console.error('Error adding to cart:', error);
