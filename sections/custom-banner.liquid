@@ -4,7 +4,13 @@
     {% comment %} Mobile Content box {% endcomment %}
      <div class="custom-banner__header-mobile">
         {% if section.settings.heading != blank %}
-            <h2 class="custom-banner__heading custom-banner__heading--desktop"> {{ section.settings.heading | escape }} </h2>
+            <h2 class="custom-banner__heading"> {{ section.settings.heading | escape }} </h2>
+        {% endif %}
+        
+        {% if section.settings.description != blank %}
+        <div class="custom-banner__description custom-banner__description--desktop">
+            <p> {{ section.settings.description | newline_to_br }} </p>
+        </div>
         {% endif %}
      </div>
 
