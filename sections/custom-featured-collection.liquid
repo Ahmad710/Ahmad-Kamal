@@ -171,12 +171,12 @@
             const targetModal = document.getElementById(targetId);
             console.log(targetModal);
 
-            if (targetModal) {
+            {% comment %} if (targetModal) { {% endcomment %}
                 targetModal.classList.remove('is-active');
                 targetModal.setAttribute('aria-hidden', 'true');
                 button.setAttribute('aria-expanded', 'false');
                 document.body.classList.remove('custom-featured-collection-modal-open');
-            }
+            {% comment %} } {% endcomment %}
         });
     });
     
