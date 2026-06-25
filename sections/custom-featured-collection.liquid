@@ -164,8 +164,8 @@
     });
 
     
-    closeBtn.forEach(button => {
-        button.addEventListener('click', function() {
+    closeBtn.forEach(close => {
+        close.addEventListener('click', function() {
                 targetModal.classList.remove('is-active');
                 targetModal.setAttribute('aria-hidden', 'true');
                 button.setAttribute('aria-expanded', 'false');
