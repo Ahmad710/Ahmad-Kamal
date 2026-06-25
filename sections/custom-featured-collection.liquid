@@ -188,6 +188,9 @@
             const swatchGroup = swatch.closest('.custom-featured-collection__swatches');
             const optionBlock = swatch.closest('.custom-featured-collection__modal-option');
 
+            console.log(swatchGroup);
+            console.log(optionBlock);
+
             swatchGroup.querySelectorAll('.custom-featured-collection__swatch').forEach(btn => {
                 btn.classList.remove('is-selected');
             });
